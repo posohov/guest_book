@@ -2,25 +2,28 @@
 <html>
 <head>
 	<title>Guest book</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<form method="POST" action="index.php">
-		<p>
-			<label>Имя:</label><br>
-			<input type="text" name="name" placeholder="Имя" required="">
-		</p>
-		<p>
-			<label>Фамилия:</label><br>
-			<input type="text" name="lastname" placeholder="Фамилия" required="">
-		</p>
-		
-		<p>
-			<label>Собщение:</label><br>
-		<textarea name="message" placeholder="Сообщение"> </textarea>
-		<p>
-			<input type="submit">
-		</p>	
-	</form>
+	<div class="form-group">
+		<form method="POST" action="index.php">
+			<p>
+				<label>Имя:</label><br>
+				<input type="text" class="form-control"  name="name" placeholder="Имя" required="">
+			</p>
+			<p>
+				<label>Фамилия:</label><br>
+				<input type="text" class="form-control mb-3"  name="lastname" placeholder="Фамилия" required="">
+			</p>
+			
+			<p>
+				<label>Собщение:</label><br>
+			<textarea name="message" class="form-control" placeholder="Сообщение"> </textarea>
+			<p>
+				<input type="submit" class="btn btn-primary">
+			</p>	
+		</form>
+	</div>
 	<?php
 	//открываем соединение с базой данных и получаем обьект соединения с базой данных
 	$conn = mysqli_connect("localhost", "root", "", "guest_book");
@@ -52,17 +55,35 @@
 	//проверяем на наличие данных в БД
 	if ($result->num_rows > 0) {
     // выводим данные каждой строки
+		echo '<table class="table table-striped">';
+		echo '<tr><th>Name</th><th>Lastname</th><th>Message</th><th>Created</th><tr>';
     	while($row = $result->fetch_assoc()) {
-        	echo "Name: " . $row["name"]. " - Message: " . $row["message"]. " Created_at " . $row["created_at"] . "<br>";
+    		echo '<tr>';
+    		echo '<td>' . $row["name"] . '</td>';
+    		echo '<td></td>';
+
+    		echo '<td>' . $row["message"] . '</td>';
+    		echo '<td>' . $row["created_at"] . '</td>';
+
+    		echo "</tr>";
+
+        	
     	}
 	} else {
     	echo "0 results";
 	}
+	echo '</table>';
+
 
 	//закрываем соединение с БД
 	$conn->close();
 
 	?>
 
+   
+     
+     
+  
+</table>
 </body>
 </html>
