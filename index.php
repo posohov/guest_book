@@ -9,11 +9,11 @@
 		<form method="POST" action="index.php">
 			<p>
 				<label>Имя:</label><br>
-				<input type="text" class="form-control"  name="name" placeholder="Имя" required="">
+				<input type="text" class="form-control"  name="name" placeholder="Имя" >
 			</p>
 			<p>
 				<label>Фамилия:</label><br>
-				<input type="text" class="form-control mb-3"  name="lastname" placeholder="Фамилия" required="">
+				<input type="text" class="form-control mb-3"  name="lastname" placeholder="Фамилия" >
 			</p>
 			
 			<p>
@@ -24,7 +24,7 @@
 			</p>	
 		</form>
 	</div>
-	<?php
+<?php
 	//открываем соединение с базой данных и получаем обьект соединения с базой данных
 	$conn = mysqli_connect("localhost", "root", "", "guest_book");
 	//устанавливаем кодировку символов "utf8"
@@ -35,55 +35,65 @@
 		die("Не удалось подключиться к базе данных" . mysqli_connect_error());
 	}
 	//проверяем метод запроса POST и делаем запрос к базе данных	
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    	$name = $_POST["name"];
+	/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	   	$name = $_POST["name"];
 		$lastname = $_POST["lastname"];
 		$message = $_POST["message"];
 		$query = "INSERT INTO users (name, lastname, message) VALUES (?,?,?)";
 		$stmt = $conn->prepare($query); //подготавливает запрос  к базе данных
 		$stmt->bind_param("sss", $name, $lastname, $message); //выполнения запроса
-		
+			
 		//проверка запроса на выполнение
 		if (!$stmt->execute()) {
-    	echo "Выполнить запрос не удалось: (" . $stmt->errno . ") " . $stmt->error;
+	    echo "Выполнить запрос не удалось: (" . $stmt->errno . ") " . $stmt->error;
 		}
+	}*/
+	$errors = [];
+	if (!empty($_POST)) {
+		if(empty($_POST['name'])) {
+			$errors[] = "Введите имя";
+		}
+		if (empty($_POST['lastname'])) {
+			$errors[] = "Введите фамилию";
+		}
+		if (empty($_POST['message'])) {
+			$errors[] = "Hello";
+		}
+		if (empty($errors)) {
+		$name = $_POST['name'];
+		$lastname = $_POST['lastname'];
+		$message = $_POST['message'];
+		$query = "INSERT INTO users (name, lastname, message) VALUES (?,?,?)";
+		$stmt = $conn->prepare($query); //подготавливает запрос  к базе данных
+		$stmt->bind_param("sss", $name, $lastname, $message); //выполнения запроса
+
+		if(!$stmt->execute()) {
+	    echo "Выполнить запрос не удалось: (" . $stmt->errno . ") " . $stmt->error;
+		}
+	} else {
+		die("Заполните данные формы");
 	}
-
-	$sql = "SELECT  name, message, created_at FROM users ORDER BY created_at DESC";
-	$result = $conn->query($sql);
-
+		$sql = "SELECT  name, lastname, message, created_at FROM users ORDER BY created_at DESC Limit 10";
+		$result = $conn->query($sql);
+		
+	}
 	//проверяем на наличие данных в БД
-	if ($result->num_rows > 0) {
-    // выводим данные каждой строки
+	if ($result->num_rows() > 0) {
+	   // выводим данные каждой строки
 		echo '<table class="table table-striped">';
 		echo '<tr><th>Name</th><th>Lastname</th><th>Message</th><th>Created</th><tr>';
-    	while($row = $result->fetch_assoc()) {
-    		echo '<tr>';
-    		echo '<td>' . $row["name"] . '</td>';
-    		echo '<td></td>';
-
-    		echo '<td>' . $row["message"] . '</td>';
-    		echo '<td>' . $row["created_at"] . '</td>';
-
-    		echo "</tr>";
-
-        	
-    	}
+	   	while($row = $result->fetch_assoc()) {
+	   		echo '<tr><td>' . $row['name'] . '</td><td></td><td>' . $row["message"] . '</td><td>' . $row["created_at"] . '</td></tr>';
+	    }
+	     echo '</table>';
 	} else {
-    	echo "0 results";
+	    echo "0 results";
 	}
-	echo '</table>';
 
-
-	//закрываем соединение с БД
+		//закрываем соединение с БД
 	$conn->close();
-
-	?>
-
-   
-     
-     
+?>
+	
   
-</table>
 </body>
 </html>
