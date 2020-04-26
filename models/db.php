@@ -1,7 +1,6 @@
 <?php
 //открываем соединение с базой данных и получаем обьект соединения с базой данных
 $conn = mysqli_connect("localhost", "root", "", "guest_book");
-
 //устанавливаем кодировку символов "utf8"
 mysqli_set_charset($conn, "utf8");
 
