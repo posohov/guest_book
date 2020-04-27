@@ -19,7 +19,8 @@ if (empty($errors)) {
 
     include('../models/users.php');
     include('./showUsers.php');
-    //TODO редирект на с траничку с табличкой юзеров
+    //TODO редирект на страничку с табличкой юзеров
+    header("Location:../views/tableUsers.php");
 
 } else {
 include('../views/form.php');
