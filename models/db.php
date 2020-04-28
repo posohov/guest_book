@@ -5,7 +5,7 @@ $conn = mysqli_connect("localhost", "root", "", "guest_book");
 mysqli_set_charset($conn, "utf8");
 
 //проверяем соединение к базе данных, если нет соединения, то выводим описание ошибки соединения  и закрываем скрипт
-if(!$conn) {
+if (!$conn) {
     die("Не удалось подключиться к базе данных" . mysqli_connect_error());
 }
 

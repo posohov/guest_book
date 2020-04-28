@@ -1,5 +1,5 @@
 <?php
-require ("db.php");
+require("db.php");
 
 $query = "INSERT INTO users (name, lastname, message) VALUES (?,?,?)";
 $stmt = $conn->prepare($query); //подготавливает запрос  к базе данных
