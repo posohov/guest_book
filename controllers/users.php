@@ -4,7 +4,7 @@ $errors = [];
 if (empty($_POST['name'])) {
     $errors['name'] = "Введите имя";
 }
-if (empty($_POST['lastname']) && isset($_POST['submit'])) {
+if (empty($_POST['lastname'])) {
     $errors['lastname'] = "Введите фамилию";
 }
 if (empty($_POST['message'])) {
@@ -19,7 +19,6 @@ if (empty($errors)) {
     include('../models/users.php');
     include('./showUsers.php');
     //TODO редирект на страничку с табличкой юзеров
-//    header("Location:../views/tableUsers.php");
 
 } else {
     include('../views/form.php');
