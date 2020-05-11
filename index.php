@@ -10,5 +10,14 @@ $app = new Bootstrap();
 
 
 //var_dump($_GET);
+echo "<hr>";
+
+
+/*$con = mysqli_connect(localhost, 'root', '', "guestbook");
+if($con){
+    echo "Connect DB";
+} else {
+    echo 'Connect no';
+}*/
 
 ?>
