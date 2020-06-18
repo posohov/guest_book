@@ -1,3 +1,9 @@
 <?php
+require 'views/header.php'
+?>
 
-echo "<h1>This is the Help Index</h1>";
+Это HELP;
+
+<?php
+require 'views/footer.php';
+?>

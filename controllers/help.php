@@ -8,7 +8,7 @@ class Help extends Controller
     {
 
         parent:: __construct();
-        echo "Мы в Help";
+//        $this->view->render('help/index');
     }
 
    public function index()

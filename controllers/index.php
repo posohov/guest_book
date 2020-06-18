@@ -6,8 +6,21 @@ class Index extends Controller
         parent::__construct();
         $this->view->msg = "Это главная страница сайта";
 
-        return $this->view->render('index/index');
+        $this->view->render('index/index');
 
+    }
+    public function callBack()
+    {
+        echo $_POST['name'];
+    }
+    public  function index()
+    {
+        echo "INSIDE INDEX INDEX";
+    }
+
+    public function details()
+    {
+        $this->view->render('index/index');
     }
 }
 

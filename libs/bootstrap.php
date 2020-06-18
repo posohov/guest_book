@@ -12,11 +12,11 @@ class Bootstrap
         if(empty($url[0])) {
             require 'controllers/index.php';
             $controllers = new Index();
+            $controllers->index();
             return false;
 
         }
         $file = 'controllers/' . $url[0] . '.php';
-//        require_once
         if (file_exists($file)) {
             require $file;
         } else {
@@ -25,19 +25,26 @@ class Bootstrap
             return false;
         }
         $controllers = new $url[0];
-
+       $controllers->loadModel($url[0]);
 
         if (isset($url[2])) {
+            if(method_exists($controllers, $url[1])) {
+                $controllers->{$url[1]}($url[2]);
+            } else {
+                echo "Error";
+            }
             $controllers->$url[1]($url[2]);
         } else {
             if (isset($url[1])) {
-                $controllers->$url[1]();
+                $controllers->{$url[1]}();
+            } else {
+                $controllers->index();
             }
         }
     }
 }
 
 
-echo '<hr>';
+//echo '<hr>';
 
 
